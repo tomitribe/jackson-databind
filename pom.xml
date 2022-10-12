@@ -72,6 +72,7 @@
     <packageVersion.package>com.fasterxml.jackson.databind.cfg</packageVersion.package>
 
     <version.powermock>2.0.0</version.powermock>
+    <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
   </properties>
 
   <dependencies>
@@ -400,6 +401,50 @@
         </plugins>
       </build>
     </profile>
-  </profiles>
+    
+    <profile>
+      <id>main</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <build>
+       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>${maven-release-plugin-version}</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
+            <preparationGoals>clean install</preparationGoals>
+            <goals>deploy</goals>
+            <remoteTagging>false</remoteTagging>
+            <suppressCommitBeforeTag>false</suppressCommitBeforeTag>
+            <tagNameFormat>jackson-databind-@{project.version}</tagNameFormat>
+          </configuration>
+          <dependencies>
+            <dependency>
+             <groupId>org.apache.maven.scm</groupId>
+             <artifactId>maven-scm-api</artifactId>
+             <version>1.8.1</version>
+            </dependency>
+          <dependency>
+             <groupId>org.apache.maven.scm</groupId>
+             <artifactId>maven-scm-provider-gitexe</artifactId>
+             <version>1.8.1</version>
+           </dependency>
+         </dependencies>
+	 </plugin>
+	 <plugin>
+           <groupId>org.sonatype.plugins</groupId>
+           <artifactId>nexus-staging-maven-plugin</artifactId>
+           <extensions>false</extensions>
+	 </plugin>
+        </plugins>
+     </build>
+    </profile>
+
+</profiles>
 
 </project>
