@@ -5,6 +5,7 @@ on:
     - master
     - "3.0"
     - "2.14"
+    - "2.12.x-TT.x-release"
     paths-ignore:
     - "README.md"
     - "release-notes/*"
